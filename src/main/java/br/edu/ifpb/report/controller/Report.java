@@ -1,22 +1,24 @@
 package br.edu.ifpb.report.controller;
 
-import br.edu.ifpb.report.database.PostgreSQLDatabaseConnector;
+import br.edu.ifpb.report.database.DatabaseConnector;
 
 public abstract class Report {
+    abstract protected DatabaseConnector getConnector();
+    protected DatabaseConnector connector;
+
     public void generate() {
         createDatabaseConnection();
-        executeDatabaseQuery();
+        runDatabaseQuery();
         convertToFile();
     }
 
-    public abstract void createDatabaseConnection();
-    // @@@
-    //public void createDatabaseConnection() {
-    //    System.out.println("Creating Database Connection...");
-    //    connector.createConnection();
-    //}
+    public void createDatabaseConnection() {
+        System.out.println("Creating Database Connection...");
+        this.connector = this.getConnector();
+        connector.openConnection();
+    }
 
-    public abstract void executeDatabaseQuery();
+    abstract public void runDatabaseQuery();
 
-    public abstract void convertToFile();
+    abstract public void convertToFile();
 }

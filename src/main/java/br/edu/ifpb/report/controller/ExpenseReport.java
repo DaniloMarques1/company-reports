@@ -1,20 +1,18 @@
 package br.edu.ifpb.report.controller;
 
+import br.edu.ifpb.report.database.DatabaseConnector;
 import br.edu.ifpb.report.database.PostgreSQLDatabaseConnector;
 
 public class ExpenseReport extends Report {
 
-    // @@@
-    private PostgreSQLDatabaseConnector connector = new PostgreSQLDatabaseConnector();
-
+    // factory
     @Override
-    public void createDatabaseConnection() {
-        System.out.println("Creating Database Connection...");
-        connector.createConnection();
+    protected DatabaseConnector getConnector() {
+        return new PostgreSQLDatabaseConnector();
     }
 
     @Override
-    public void executeDatabaseQuery() {
+    public void runDatabaseQuery() {
         System.out.println("Executing Postgres Query...");
         String query = "SELECT * FROM expenses";
         connector.runQuery(query);
